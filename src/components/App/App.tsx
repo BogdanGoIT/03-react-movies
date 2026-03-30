@@ -5,17 +5,27 @@ import "./App.css";
 import { useState } from "react";
 import type { Movie } from "../../type/movie";
 import MovieGrid from "../MovieGrid/MovieGrid";
+import Loader from "../Loader/Loader";
 
 function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
+  const [loader, setLoader] = useState(false);
 
   const handleSearch = async (query: string) => {
-    const data = await fetchMovies(query);
-    if (!data.results.length) {
-      toast.error("No movies found for your request.");
-      return;
+    try {
+      setMovies([]);
+      setLoader(true);
+      const data = await fetchMovies(query);
+      if (!data.results.length) {
+        toast.error("No movies found for your request.");
+        return;
+      }
+      setMovies(data.results);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoader(false);
     }
-    setMovies(data.results);
   };
 
   const onSelect = () => {
@@ -25,6 +35,7 @@ function App() {
   return (
     <>
       <SearchBar onSubmit={handleSearch} />
+      {loader && <Loader />}
       {movies.length > 0 && <MovieGrid movies={movies} onSelect={onSelect} />}
       <Toaster position="top-center" reverseOrder={false} />
     </>
