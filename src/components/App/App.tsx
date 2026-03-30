@@ -7,11 +7,21 @@ import type { Movie } from "../../type/movie";
 import MovieGrid from "../MovieGrid/MovieGrid";
 import Loader from "../Loader/Loader";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
+import MovieModal from "../MovieModal/MovieModal";
 
 function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [loader, setLoader] = useState(false);
   const [error, setError] = useState(false);
+  const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
+
+  const onSelect = (move: Movie) => {
+    setSelectedMovie(move);
+  };
+
+  const closeModal = () => {
+    setSelectedMovie(null);
+  };
 
   const handleSearch = async (query: string) => {
     try {
@@ -31,10 +41,6 @@ function App() {
     }
   };
 
-  const onSelect = () => {
-    console.log("click");
-  };
-
   return (
     <>
       <SearchBar onSubmit={handleSearch} />
@@ -42,6 +48,9 @@ function App() {
       {error && <ErrorMessage />}
       {movies.length > 0 && <MovieGrid movies={movies} onSelect={onSelect} />}
       <Toaster position="top-center" reverseOrder={false} />
+      {selectedMovie && (
+        <MovieModal onClose={closeModal} movie={selectedMovie} />
+      )}
     </>
   );
 }

@@ -3,7 +3,7 @@ import css from "./MovieGrid.module.css";
 
 interface MovieGridProps {
   movies: Movie[];
-  onSelect: () => void;
+  onSelect: (item: Movie) => void;
 }
 
 export default function MovieGrid({ movies, onSelect }: MovieGridProps) {
@@ -13,7 +13,7 @@ export default function MovieGrid({ movies, onSelect }: MovieGridProps) {
         <li key={item.id}>
           <div className={css.card}>
             <img
-              onClick={onSelect}
+              onClick={() => onSelect(item)}
               className={css.image}
               src={`https://image.tmdb.org/t/p/w500/${item.poster_path}`}
               alt={item.title}
