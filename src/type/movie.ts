@@ -8,6 +8,10 @@ export interface Movie {
   vote_average: number;
 }
 
+export interface GetMovieRes {
+  results: Movie[];
+}
+
 export interface OnSubmitProps {
-  onSubmit: (search: string) => void;
+  onSubmit: (search: string) => Promise<void>;
 }

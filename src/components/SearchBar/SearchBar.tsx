@@ -5,11 +5,12 @@ import styles from "./SearchBar.module.css";
 export default function SearchBar({ onSubmit }: OnSubmitProps) {
   const handleSubmit = (formData: FormData) => {
     const query = formData.get("query") as string;
-    if (query.trim() !== "") {
-      onSubmit(query);
-    } else {
+    if (query.trim() === "") {
       toast.error("Please enter your search query.");
+      return;
     }
+
+    onSubmit(query);
   };
 
   return (
