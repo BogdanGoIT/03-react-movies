@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { GetMovieRes } from "../type/movie";
+import type { GetMovieRes } from "../types/movie";
 
 const movieKey = import.meta.env.VITE_TMDB_TOKEN;
 
