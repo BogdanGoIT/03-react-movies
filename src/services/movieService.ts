@@ -1,5 +1,9 @@
 import axios from "axios";
-import type { GetMovieRes } from "../types/movie";
+import type { Movie } from "../types/movie";
+
+export interface GetMovieRes {
+  results: Movie[];
+}
 
 const movieKey = import.meta.env.VITE_TMDB_TOKEN;
 
